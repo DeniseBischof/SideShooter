@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour {
     const int StartLevel = 1;
     public int CurrentLevel;
     private int BossLevel = 1;
-    public static int BossLives = 10;
+    public static int BossLives = 20;
 
     [SerializeField]
     public Text ScoreTextGame;
@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
 
-        BulletPool.Preload(bullet, 50);
+        BulletPool.Preload(bullet, 70);
 
         GCState = GameControllerState.Title;
         UpdateGameControllerState();
@@ -118,7 +118,7 @@ public class GameController : MonoBehaviour {
 
         if (BossLives <= 0)
         {
-            BossLives = 10;
+            BossLives = 20;
             audioSource.PlayOneShot(gameBoss, 1F);
             BossEnemy.SetActive(false);
             Invoke("StartGame", 0.2f);
@@ -129,7 +129,7 @@ public class GameController : MonoBehaviour {
 
         if (GameOverTrue == true) { 
         if (Input.GetKeyDown(KeyCode.Space)) { //Thereza fragen wegen anderer Möglichkeit =/
-            Invoke("StartGameAgain", 0.2f);
+            Invoke("StartGameTitle", 0.2f);
             audioSource.PlayOneShot(restart, 1F);
             GameOverTrue = false;
         }
@@ -156,7 +156,6 @@ public class GameController : MonoBehaviour {
                 break;
 
             case GameControllerState.StartGame:
-
                 audioSource.PlayOneShot(start, 0.7F);
 
                 Invoke("StartGame", 2f);
@@ -202,6 +201,7 @@ public class GameController : MonoBehaviour {
             case GameControllerState.GameOver:
 
                 audioSource.Stop();
+
                 audioSource.PlayOneShot(gameOverSound, 0.7F);
                 enemySpawner1.GetComponent<EnemySpawner>().StopEnemySpawn();
                 enemySpawner2.GetComponent<EnemySpawner>().StopEnemySpawn();
@@ -232,10 +232,8 @@ public class GameController : MonoBehaviour {
         GCState = state;
         UpdateGameControllerState();
     }
-    public void StartGameAgain()
+    public void StartGameTitle()
     {
-        
-
         GCState = GameControllerState.Title;
         UpdateGameControllerState();
     

@@ -27,7 +27,6 @@ public class specialEnemy3D : MonoBehaviour
     {
         if (col.tag == "PlayerBullets")
         {
-            Destroy(col.gameObject);
             StartCoroutine(dissolveShader());
             GameController.Score += 100;
         }
